@@ -19,15 +19,15 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <div className="min-h-screen bg-gradient-electric">
+    <div className="min-h-screen bg-gradient-dark">
       {/* Header */}
-      <header className="fixed top-0 w-full z-50 bg-black/90 backdrop-blur-md border-b border-electric-blue/20">
+      <header className="fixed top-0 w-full z-50 bg-black/95 backdrop-blur-md border-b border-red-500/20">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-electric-blue to-electric-yellow rounded-lg"></div>
-              <span className="text-2xl font-orbitron font-bold text-gradient">EventTech</span>
+              <div className="w-8 h-8 bg-gradient-to-r from-red-500 to-white rounded-lg"></div>
+              <span className="text-2xl font-orbitron font-bold text-gradient">Teclas Eventos</span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -36,8 +36,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`font-medium transition-all duration-300 hover:text-electric-blue ${
-                    isActive(item.path) ? 'text-electric-blue' : 'text-white'
+                  className={`font-medium transition-all duration-300 hover:text-red-500 ${
+                    isActive(item.path) ? 'text-red-500' : 'text-white'
                   }`}
                 >
                   {item.name}
@@ -61,8 +61,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`block py-2 font-medium transition-all duration-300 hover:text-electric-blue ${
-                    isActive(item.path) ? 'text-electric-blue' : 'text-white'
+                  className={`block py-2 font-medium transition-all duration-300 hover:text-red-500 ${
+                    isActive(item.path) ? 'text-red-500' : 'text-white'
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -81,7 +81,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
       {/* Fixed Quote Button */}
       <div className="fixed bottom-6 right-6 z-50">
-        <Button className="bg-electric-yellow text-black font-bold py-4 px-6 rounded-full animate-bounce-gentle hover:animate-glow transition-all duration-300 electric-shadow">
+        <Button className="bg-red-500 text-white font-bold py-4 px-6 rounded-full animate-bounce-gentle hover:animate-glow transition-all duration-300 red-shadow hover:bg-red-600">
           <Phone className="mr-2 h-5 w-5" />
           Solicite seu orçamento
         </Button>
@@ -93,7 +93,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           href="https://wa.me/5511999999999"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center w-14 h-14 bg-green-500 text-white rounded-full hover:bg-green-600 transition-all duration-300 hover:scale-110"
+          className="flex items-center justify-center w-14 h-14 bg-green-500 text-white rounded-full hover:bg-green-600 transition-all duration-300 hover:scale-110 animate-pulse-red"
         >
           <Phone className="h-6 w-6" />
         </a>
