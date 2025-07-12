@@ -1,8 +1,12 @@
-
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Play, Users, Lightbulb, Music, Monitor, Building, Star, Award, Heart } from 'lucide-react';
+import { EventModal } from '@/components/EventModal';
 
 const Home = () => {
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const services = [
     {
       icon: Building,
@@ -40,6 +44,79 @@ const Home = () => {
       rating: 5
     }
   ];
+
+  const eventGallery = [
+    {
+      id: 1,
+      type: 'image' as const,
+      title: 'Evento Corporativo',
+      thumbnail: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=300&fit=crop',
+      description: 'Evento corporativo de grande porte com iluminação profissional e estrutura completa para 500 participantes.',
+      details: {
+        date: '15 de Março, 2024',
+        location: 'Centro de Convenções - São Paulo',
+        attendees: '500 participantes',
+        duration: '8 horas',
+        services: ['Palco Modular', 'Sistema de Som', 'Iluminação LED', 'Painéis de LED', 'Produção Técnica'],
+        gallery: [
+          'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=300&h=200&fit=crop',
+          'https://images.unsplash.com/photo-1511578314322-379afb476865?w=300&h=200&fit=crop',
+          'https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=300&h=200&fit=crop',
+          'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=300&h=200&fit=crop'
+        ]
+      }
+    },
+    {
+      id: 2,
+      type: 'image' as const,
+      title: 'Casamento',
+      thumbnail: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop',
+      description: 'Casamento dos sonhos com som ambiente perfeito e iluminação romântica que criou a atmosfera ideal.',
+      details: {
+        date: '22 de Abril, 2024',
+        location: 'Fazenda Villa Bella - Interior SP',
+        attendees: '150 convidados',
+        duration: '12 horas',
+        services: ['Som Ambiente', 'Iluminação Romântica', 'Microfonação', 'DJ Setup', 'Assessoria Técnica'],
+        gallery: [
+          'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=300&h=200&fit=crop',
+          'https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?w=300&h=200&fit=crop',
+          'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=300&h=200&fit=crop',
+          'https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=300&h=200&fit=crop'
+        ]
+      }
+    },
+    {
+      id: 3,
+      type: 'video' as const,
+      title: 'Show Musical',
+      thumbnail: 'https://images.unsplash.com/photo-1494891848038-7bd202a2afeb?w=400&h=300&fit=crop',
+      description: 'Show de grande porte com estrutura de palco profissional e painéis LED de última geração.',
+      details: {
+        date: '10 de Maio, 2024',
+        location: 'Arena Cultural - Rio de Janeiro',
+        attendees: '2.000 pessoas',
+        duration: '6 horas',
+        services: ['Palco Principal', 'Painéis LED 4K', 'Sistema de Som Line Array', 'Iluminação Cênica', 'Efeitos Especiais'],
+        gallery: [
+          'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=300&h=200&fit=crop',
+          'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=200&fit=crop',
+          'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=300&h=200&fit=crop',
+          'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=300&h=200&fit=crop'
+        ]
+      }
+    }
+  ];
+
+  const handleEventClick = (event: any) => {
+    setSelectedEvent(event);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedEvent(null);
+  };
 
   return (
     <div className="min-h-screen">
@@ -148,47 +225,35 @@ const Home = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="relative group overflow-hidden rounded-xl">
-              <img 
-                src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=300&fit=crop" 
-                alt="Evento com iluminação vermelha profissional" 
-                className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="absolute bottom-4 left-4">
-                  <h3 className="text-white font-bold">Evento Corporativo</h3>
-                  <p className="text-gray-300 text-sm">Iluminação e Som Profissional</p>
+            {eventGallery.map((event, index) => (
+              <div 
+                key={event.id}
+                className="relative group overflow-hidden rounded-xl cursor-pointer"
+                onClick={() => handleEventClick(event)}
+              >
+                <img 
+                  src={event.thumbnail}
+                  alt={event.title}
+                  className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute bottom-4 left-4">
+                    <div className="flex items-center mb-2">
+                      {event.type === 'video' ? (
+                        <Play className="h-5 w-5 text-red-500 mr-2" />
+                      ) : (
+                        <Monitor className="h-5 w-5 text-red-500 mr-2" />
+                      )}
+                      <span className="text-xs text-gray-300 uppercase tracking-wide">
+                        Clique para ver mais
+                      </span>
+                    </div>
+                    <h3 className="text-white font-bold">{event.title}</h3>
+                    <p className="text-gray-300 text-sm">{event.description.substring(0, 60)}...</p>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div className="relative group overflow-hidden rounded-xl">
-              <img 
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop" 
-                alt="Equipamentos de som em evento" 
-                className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="absolute bottom-4 left-4">
-                  <h3 className="text-white font-bold">Casamento</h3>
-                  <p className="text-gray-300 text-sm">Som e Iluminação Romântica</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative group overflow-hidden rounded-xl">
-              <img 
-                src="https://images.unsplash.com/photo-1494891848038-7bd202a2afeb?w=400&h=300&fit=crop" 
-                alt="Estrutura moderna de palco" 
-                className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="absolute bottom-4 left-4">
-                  <h3 className="text-white font-bold">Show Musical</h3>
-                  <p className="text-gray-300 text-sm">Palco e Painéis LED</p>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -248,6 +313,15 @@ const Home = () => {
           </Button>
         </div>
       </section>
+
+      {/* Event Modal */}
+      {selectedEvent && (
+        <EventModal 
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          event={selectedEvent}
+        />
+      )}
     </div>
   );
 };
